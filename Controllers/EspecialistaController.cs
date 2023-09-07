@@ -8,23 +8,26 @@ using CitasMedicasAPI.Data.CitasApiModels;
 
 
 
-public class EspecialistasController : ControllerBase{
+public class EspecialistasController : ControllerBase
+{
     // Métodos para manejar las operaciones relacionadas con especialistas
-     private readonly DbdirectorioContext _context;
+    private readonly DbdirectorioContext _context;
 
-     public EspecialistasController(DbdirectorioContext context) {
+    public EspecialistasController(DbdirectorioContext context)
+    {
 
         //referenciando el contexto 
         _context = context;
 
-    } 
-   
+    }
+
     /* 
     metodo para listar los especialistas con un get 
     */
 
-    [HttpGet ("getEspecialista")]
-    public IEnumerable<Especialista> Get(){
+    [HttpGet("getEspecialista")]
+    public IEnumerable<Especialista> Get()
+    {
         return _context.Especialistas.ToList();
     }
 
@@ -33,9 +36,11 @@ public class EspecialistasController : ControllerBase{
     */
 
     [HttpGet("getEspecialista/{id}")]
-    public ActionResult<Especialista>GetById(int id){
+    public ActionResult<Especialista> GetById(int id)
+    {
         var especialistaFind = _context.Especialistas.Find(id);
-        if (especialistaFind is null){
+        if (especialistaFind is null)
+        {
             return NotFound();
         }
         return especialistaFind;
@@ -43,16 +48,17 @@ public class EspecialistasController : ControllerBase{
     //TODO delete, , post
 
 
-     /*
-    metodo post para Especialistas
-    */
+    /*
+   metodo post para Especialistas
+   */
 
     [HttpPost("postEspecialista")]
-    public IActionResult Create(Especialista especialista){
+    public IActionResult Create(Especialista especialista)
+    {
         _context.Especialistas.Add(especialista);
         _context.SaveChanges();
 
-        return CreatedAtAction(nameof(GetById), new {id = especialista.Id}, especialista);
+        return CreatedAtAction(nameof(GetById), new { id = especialista.Id }, especialista);
     }
 
     /*
@@ -60,12 +66,15 @@ public class EspecialistasController : ControllerBase{
     */
 
     [HttpPut("putEspecialista/{id}")]
-    public IActionResult Update(int id, Especialista especialista){
-        if(id != especialista.Id){
+    public IActionResult Update(int id, Especialista especialista)
+    {
+        if (id != especialista.Id)
+        {
             return BadRequest();
         }
         var existingEspecialista = _context.Especialistas.Find(id);
-        if(existingEspecialista is null){
+        if (existingEspecialista is null)
+        {
             return NotFound();
         }
 
@@ -83,7 +92,7 @@ public class EspecialistasController : ControllerBase{
 
         return NoContent();
     }
-    
 
-    
+
+
 }

@@ -51,25 +51,29 @@ public class PacientesController : ControllerBase
     metodo post para pacientes
     */
     [HttpPost("postpaciente")]
-    public IActionResult Create(Paciente paciente){
+    public IActionResult Create(Paciente paciente)
+    {
         _context.Pacientes.Add(paciente);
         _context.SaveChanges();
 
-        return CreatedAtAction(nameof(GetById),new {id = paciente.Id}, paciente); 
+        return CreatedAtAction(nameof(GetById), new { id = paciente.Id }, paciente);
     }
     /*
     metodo put para pacientes
     */
     [HttpPut("putpaciente/{id}")]
     // verificando  que el paciente exista
-    public IActionResult Update(int id, Paciente paciente){
-        if(id != paciente.Id){
+    public IActionResult Update(int id, Paciente paciente)
+    {
+        if (id != paciente.Id)
+        {
             return BadRequest();
-    
+
         }
         var existingPaciente = _context.Pacientes.Find(id);
-        if (existingPaciente is null){
-            return NotFound() ;
+        if (existingPaciente is null)
+        {
+            return NotFound();
         }
         //campos en la DB
         existingPaciente.Nombre = paciente.Nombre;
