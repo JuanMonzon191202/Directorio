@@ -1,4 +1,5 @@
 using CitasMedicasAPI.Data;
+using CitasMedicasAPI.Data.CitasApiModels;
 using CitasMedicasAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +14,13 @@ builder.Services.AddSwaggerGen();
 //DBcontext
 builder.Services.AddSqlServer<DbdirectorioContext>(builder.Configuration.GetConnectionString("CitasConnetion"));
 
-//inyectar servicio
+//inyectar servicio Paciente
 builder.Services.AddScoped<PacienteService>();
+//inyectar servicio Especialistas
+builder.Services.AddScoped<EspecialistaService>();
+// inyectar servicio CMC
+// builder.Services.AddScoped<CMCService>();
+
 
 var app = builder.Build();
 

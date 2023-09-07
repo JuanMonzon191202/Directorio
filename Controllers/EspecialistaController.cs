@@ -1,23 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using CitasMedicasAPI.Data;
 using CitasMedicasAPI.Data.CitasApiModels;
+using CitasMedicasAPI.Services;
 
 
-[Route("api/[controller]")]
+
 [ApiController]
-
+[Route("api/[controller]")]
 
 
 public class EspecialistasController : ControllerBase
 {
     // Métodos para manejar las operaciones relacionadas con especialistas
-    private readonly DbdirectorioContext _context;
+    private readonly EspecialistaService _service;
 
-    public EspecialistasController(DbdirectorioContext context)
+    public EspecialistasController(EspecialistaService service)
     {
 
         //referenciando el contexto 
-        _context = context;
+        _service = service;
 
     }
 
@@ -28,7 +29,7 @@ public class EspecialistasController : ControllerBase
     [HttpGet("getEspecialista")]
     public IEnumerable<Especialista> Get()
     {
-        return _context.Especialistas.ToList();
+        return _service.GetAll();
     }
 
     /*
@@ -38,7 +39,8 @@ public class EspecialistasController : ControllerBase
     [HttpGet("getEspecialista/{id}")]
     public ActionResult<Especialista> GetById(int id)
     {
-        var especialistaFind = _context.Especialistas.Find(id);
+        var especialistaFind = _service.GetById(id);
+
         if (especialistaFind is null)
         {
             return NotFound();
@@ -55,10 +57,9 @@ public class EspecialistasController : ControllerBase
     [HttpPost("postEspecialista")]
     public IActionResult Create(Especialista especialista)
     {
-        _context.Especialistas.Add(especialista);
-        _context.SaveChanges();
-
-        return CreatedAtAction(nameof(GetById), new { id = especialista.Id }, especialista);
+        var newEspecialista = _service.Create(especialista);
+    
+        return CreatedAtAction(nameof(GetById), new { id = newEspecialista.Id }, newEspecialista);
     }
 
     /*
@@ -72,25 +73,18 @@ public class EspecialistasController : ControllerBase
         {
             return BadRequest();
         }
-        var existingEspecialista = _context.Especialistas.Find(id);
-        if (existingEspecialista is null)
+        var especialistaToUpdate = _service.GetById(id);
+
+        if (especialistaToUpdate is not null)
         {
+            _service.Update(especialista);
+            return NoContent();
+        }
+        else{
+            
             return NotFound();
         }
 
-        existingEspecialista.NombreCompleto = especialista.NombreCompleto;
-        existingEspecialista.Correo = especialista.Correo;
-        existingEspecialista.Contrasenia = especialista.Contrasenia;
-        existingEspecialista.FechaNac = especialista.FechaNac;
-        existingEspecialista.Genero = especialista.Genero;
-        existingEspecialista.Direccion = especialista.Direccion;
-        existingEspecialista.Telefono = especialista.Telefono;
-        existingEspecialista.Ciudad = especialista.Ciudad;
-        existingEspecialista.Pais = especialista.Pais;
-
-        _context.SaveChanges();
-
-        return NoContent();
     }
 
 

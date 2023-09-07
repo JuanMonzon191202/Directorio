@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using CitasMedicasAPI.Services;
-
 using Microsoft.AspNetCore.Http.Metadata;
 using CitasMedicasAPI.Data.CitasApiModels;
 
