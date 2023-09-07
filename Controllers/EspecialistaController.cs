@@ -18,18 +18,19 @@ public class EspecialistasController : ControllerBase{
         _context = context;
 
     } 
-    // metodos para manejar las solicitudes get de especialistas
-/*
- metodo para listar los especialistas con un get 
-*/
+   
+    /* 
+    metodo para listar los especialistas con un get 
+    */
+
     [HttpGet ("getEspecialista")]
-    public IEnumerable<Especialista> Get2(){
+    public IEnumerable<Especialista> Get(){
         return _context.Especialistas.ToList();
     }
 
-/*
-metodo get by id para los especialistas
-*/
+    /*
+    metodo get by id para los especialistas
+    */
 
     [HttpGet("getEspecialista/{id}")]
     public ActionResult<Especialista>GetById(int id){
@@ -39,8 +40,49 @@ metodo get by id para los especialistas
         }
         return especialistaFind;
     }
-    //TODO delete, put, post
+    //TODO delete, , post
 
+
+     /*
+    metodo post para Especialistas
+    */
+
+    [HttpPost("postEspecialista")]
+    public IActionResult Create(Especialista especialista){
+        _context.Especialistas.Add(especialista);
+        _context.SaveChanges();
+
+        return CreatedAtAction(nameof(GetById), new {id = especialista.Id}, especialista);
+    }
+
+    /*
+    metodo put para especialistas
+    */
+
+    [HttpPut("putEspecialista/{id}")]
+    public IActionResult Update(int id, Especialista especialista){
+        if(id != especialista.Id){
+            return BadRequest();
+        }
+        var existingEspecialista = _context.Especialistas.Find(id);
+        if(existingEspecialista is null){
+            return NotFound();
+        }
+
+        existingEspecialista.NombreCompleto = especialista.NombreCompleto;
+        existingEspecialista.Correo = especialista.Correo;
+        existingEspecialista.Contrasenia = especialista.Contrasenia;
+        existingEspecialista.FechaNac = especialista.FechaNac;
+        existingEspecialista.Genero = especialista.Genero;
+        existingEspecialista.Direccion = especialista.Direccion;
+        existingEspecialista.Telefono = especialista.Telefono;
+        existingEspecialista.Ciudad = especialista.Ciudad;
+        existingEspecialista.Pais = especialista.Pais;
+
+        _context.SaveChanges();
+
+        return NoContent();
+    }
     
 
     
