@@ -9,17 +9,14 @@ namespace CitasMedicasAPI.Controllers;
 [Route("api/[controller]")]
 public class PacientesController : ControllerBase
 {
-
-    // estructura base del controlador 
+    // estructura base del controlador
     private readonly PacienteService _service;
+
     public PacientesController(PacienteService service)
     {
-
-        //referenciando el contexto 
+        //referenciando el contexto
         _service = service;
-
     }
-
 
     [HttpGet("getpaciente")]
     public IEnumerable<Paciente> Get()
@@ -27,13 +24,12 @@ public class PacientesController : ControllerBase
         return _service.GetAll();
     }
 
-
     [HttpGet("getpaciente/{id}")]
     public ActionResult<Paciente> GetById(int id)
     {
         var pacienteFind = _service.GetById(id);
 
-        // respuesta si encontro o no el usuario con el id  
+        // respuesta si encontro o no el usuario con el id
         if (pacienteFind is null)
         {
             return NotFound();
@@ -50,27 +46,22 @@ public class PacientesController : ControllerBase
     }
 
     [HttpPut("putpaciente/{id}")]
-    // verificando  que el paciente exista
     public IActionResult Update(int id, Paciente paciente)
     {
         if (id != paciente.Id)
         {
-            return BadRequest();
-
+            return BadRequest("El ID proporcionado no coincide con el ID del paciente.");
         }
+
         var pacienteToUpdate = _service.GetById(id);
 
-        if (pacienteToUpdate is not null)
+        if (pacienteToUpdate == null)
         {
-            _service.Update(pacienteToUpdate);
-            return NoContent();
+            return NotFound($"Paciente con ID {id} no encontrado.");
+        }
 
-        }
-        else
-        {
-            return NotFound();
-        }
+        _service.Update(paciente);
+
+        return NoContent();
     }
-
-
 }

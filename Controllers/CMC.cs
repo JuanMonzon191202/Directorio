@@ -12,8 +12,6 @@ public class CMCController : ControllerBase
 
     public CMCController(DbdirectorioContext context)
     {
-
-
         _context = context;
     }
 

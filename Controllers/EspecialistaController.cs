@@ -66,26 +66,87 @@ public class EspecialistasController : ControllerBase
     metodo put para especialistas
     */
 
-    [HttpPut("putEspecialista/{id}")]
-    public IActionResult Update(int id, Especialista especialista)
+   [HttpPut("putEspecialista/{id}")]
+public IActionResult Update(int id, Especialista especialista)
+{
+    if (id != especialista.Id)
     {
-        if (id != especialista.Id)
-        {
-            return BadRequest();
-        }
-        var especialistaToUpdate = _service.GetById(id);
-
-        if (especialistaToUpdate is not null)
-        {
-            _service.Update(especialista);
-            return NoContent();
-        }
-        else{
-            
-            return NotFound();
-        }
-
+        return BadRequest();
     }
+
+    var especialistaToUpdate = _service.GetById(id);
+
+    if (especialistaToUpdate is null)
+    {
+        return NotFound();
+    }
+
+    // Actualiza solo los campos que no son nulos en la solicitud
+    if (especialista.NombreCompleto != null)
+    {
+        especialistaToUpdate.NombreCompleto = especialista.NombreCompleto;
+    }
+
+    if (especialista.Correo != null)
+    {
+        especialistaToUpdate.Correo = especialista.Correo;
+    }
+
+    if (especialista.Contrasenia != null)
+    {
+        especialistaToUpdate.Contrasenia = especialista.Contrasenia;
+    }
+
+    if (especialista.FechaNac != null)
+    {
+        especialistaToUpdate.FechaNac = especialista.FechaNac;
+    }
+
+    if (especialista.Genero != null)
+    {
+        especialistaToUpdate.Genero = especialista.Genero;
+    }
+
+    if (especialista.Direccion != null)
+    {
+        especialistaToUpdate.Direccion = especialista.Direccion;
+    }
+
+    if (especialista.Telefono != null)
+    {
+        especialistaToUpdate.Telefono = especialista.Telefono;
+    }
+
+    if (especialista.Ciudad != null)
+    {
+        especialistaToUpdate.Ciudad = especialista.Ciudad;
+    }
+
+    if (especialista.Pais != null)
+    {
+        especialistaToUpdate.Pais = especialista.Pais;
+    }
+
+    if (especialista.NumCedula != null)
+    {
+        especialistaToUpdate.NumCedula = especialista.NumCedula;
+    }
+
+    if (especialista.FechaRegistro != null)
+    {
+        especialistaToUpdate.FechaRegistro = especialista.FechaRegistro;
+    }
+
+    if (especialista.Activo != null)
+    {
+        especialistaToUpdate.Activo = especialista.Activo;
+    }
+
+    _service.Update(especialistaToUpdate); // Actualiza en la base de datos
+    return NoContent();
+}
+
+
 
 
 

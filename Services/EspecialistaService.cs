@@ -39,8 +39,11 @@ public class EspecialistaService
 
         var existingEspecialista = GetById(especialista.Id);
 
-        if (existingEspecialista is null)
-        {
+        if (existingEspecialista != null)
+        {   
+            existingEspecialista.Id = especialista.Id;
+            existingEspecialista.IdRol = especialista.IdRol;
+            existingEspecialista.IdEspecialidad = especialista.IdEspecialidad;
             existingEspecialista.NombreCompleto = especialista.NombreCompleto;
             existingEspecialista.Correo = especialista.Correo;
             existingEspecialista.Contrasenia = especialista.Contrasenia;
@@ -50,6 +53,9 @@ public class EspecialistaService
             existingEspecialista.Telefono = especialista.Telefono;
             existingEspecialista.Ciudad = especialista.Ciudad;
             existingEspecialista.Pais = especialista.Pais;
+            existingEspecialista.NumCedula = especialista.NumCedula;
+            existingEspecialista.FechaRegistro = especialista.FechaRegistro;
+            existingEspecialista.Activo = especialista.Activo;
 
             _context.SaveChanges();
         }
