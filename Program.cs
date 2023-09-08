@@ -19,7 +19,7 @@ builder.Services.AddScoped<PacienteService>();
 //inyectar servicio Especialistas
 builder.Services.AddScoped<EspecialistaService>();
 // inyectar servicio CMC
-// builder.Services.AddScoped<CMCService>();
+builder.Services.AddScoped<CMCService>();
 
 
 var app = builder.Build();
