@@ -51,13 +51,13 @@ public class AdminsController : ControllerBase
     [HttpPut("updateAdmin/{id}")]
     public IActionResult Update(int id, Administradore admin){
         if (id != admin.Id){
-            return BadRequest("El ID proporcionado no coincide con el ID del paciente.");
+            return BadRequest("El ID proporcionado no coincide con el ID del Admin.");
 
         }
         var adminToUpdate = _service.GetById(id);
 
         if (adminToUpdate == null){
-            return NotFound($"Paciente con ID {id} no encontrado.");
+            return NotFound($"Admin con ID {id} no encontrado.");
         }
         _service.Update(admin);
 

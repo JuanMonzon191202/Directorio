@@ -48,27 +48,28 @@ public class AdminService
     public void Update(Administradore admin)
     {
         var existingAdmin = GetById(admin.Id);
-
+        
         if (existingAdmin != null)
         {
             // actualizar solo los campos que se proporcionen en la solicitud
-            if (existingAdmin.Nombre != null)
+            if (admin.Nombre != null)
             {
                 existingAdmin.Nombre = admin.Nombre;
             }
-            if (existingAdmin.Apellido != null)
+            if (admin.Apellido != null)
             {
                 existingAdmin.Apellido = admin.Apellido;
             }
-            if (existingAdmin.Correo != null)
+            if (admin.Correo != null)
             {
                 existingAdmin.Correo = admin.Correo;
             }
-            if (existingAdmin.Contraseña != null)
+            if (admin.Contraseña != null)
             {
+                   
                 existingAdmin.Contraseña = admin.Contraseña;
             }
-            if (existingAdmin.FechaRegistro != null)
+            if (admin.FechaRegistro != null)
             {
                 existingAdmin.FechaRegistro = admin.FechaRegistro;
             }
