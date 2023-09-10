@@ -30,4 +30,8 @@ public partial class Paciente
     public DateTime? FechaRegistro { get; set; }
 
     public bool? Activo { get; set; }
+
+    public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
+
+    public virtual RolesUsuario? IdRolNavigation { get; set; }
 }

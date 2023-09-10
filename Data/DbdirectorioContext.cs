@@ -26,11 +26,11 @@ public partial class DbdirectorioContext : DbContext
 
     public virtual DbSet<Especialista> Especialistas { get; set; }
 
+    public virtual DbSet<EspecialistasEspecialidade> EspecialistasEspecialidades { get; set; }
+
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
     public virtual DbSet<Paciente> Pacientes { get; set; }
-
-    public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<RolesUsuario> RolesUsuarios { get; set; }
 
@@ -42,7 +42,7 @@ public partial class DbdirectorioContext : DbContext
     {
         modelBuilder.Entity<Administradore>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Administ__3213E83F8DED773F");
+            entity.HasKey(e => e.Id).HasName("PK__Administ__3213E83FE9EADAA5");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Apellido)
@@ -69,7 +69,7 @@ public partial class DbdirectorioContext : DbContext
 
         modelBuilder.Entity<CentrosMedicosClinica>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__CentrosM__3213E83F2017B091");
+            entity.HasKey(e => e.Id).HasName("PK__CentrosM__3213E83F04A61C81");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Activo).HasColumnName("activo");
@@ -127,11 +127,19 @@ public partial class DbdirectorioContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("telefonoCMC");
+
+            entity.HasOne(d => d.IdResponsableNavigation).WithMany(p => p.CentrosMedicosClinicas)
+                .HasForeignKey(d => d.IdResponsable)
+                .HasConstraintName("FK_CentrosMedicosClinicas_Administradores");
+
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.CentrosMedicosClinicas)
+                .HasForeignKey(d => d.IdRol)
+                .HasConstraintName("FK_CentrosMedicosClinicas_RolesUsuario");
         });
 
         modelBuilder.Entity<Cita>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Citas__3213E83F119089FB");
+            entity.HasKey(e => e.Id).HasName("PK__Citas__3213E83F61694A81");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Eliminado).HasColumnName("eliminado");
@@ -147,11 +155,23 @@ public partial class DbdirectorioContext : DbContext
             entity.Property(e => e.IdCmc).HasColumnName("id_CMC");
             entity.Property(e => e.IdEspecialista).HasColumnName("id_Especialista");
             entity.Property(e => e.IdPaciente).HasColumnName("id_Paciente");
+
+            entity.HasOne(d => d.IdCmcNavigation).WithMany(p => p.Cita)
+                .HasForeignKey(d => d.IdCmc)
+                .HasConstraintName("FK_Citas_CentrosMedicosClinicas");
+
+            entity.HasOne(d => d.IdEspecialistaNavigation).WithMany(p => p.Cita)
+                .HasForeignKey(d => d.IdEspecialista)
+                .HasConstraintName("FK_Citas_Especialistas");
+
+            entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.Cita)
+                .HasForeignKey(d => d.IdPaciente)
+                .HasConstraintName("FK_Citas_Pacientes");
         });
 
         modelBuilder.Entity<Especialidade>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Especial__3213E83F7A820707");
+            entity.HasKey(e => e.Id).HasName("PK__Especial__3213E83F78F4A05C");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
@@ -162,7 +182,7 @@ public partial class DbdirectorioContext : DbContext
 
         modelBuilder.Entity<Especialista>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Especial__3213E83F15A23318");
+            entity.HasKey(e => e.Id).HasName("PK__Especial__3213E83F217A3F97");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Activo).HasColumnName("activo");
@@ -212,11 +232,36 @@ public partial class DbdirectorioContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
+
+            entity.HasOne(d => d.IdEspecialidadNavigation).WithMany(p => p.Especialista)
+                .HasForeignKey(d => d.IdEspecialidad)
+                .HasConstraintName("FK_Especialistas_Especialidades");
+
+            entity.HasOne(d => d.IdResponsableNavigation).WithMany(p => p.Especialista)
+                .HasForeignKey(d => d.IdResponsable)
+                .HasConstraintName("FK_Especialistas_Administradores");
+
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Especialista)
+                .HasForeignKey(d => d.IdRol)
+                .HasConstraintName("FK_Especialistas_RolesUsuario");
+        });
+
+        modelBuilder.Entity<EspecialistasEspecialidade>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Especial__3214EC072F3B0B55");
+
+            entity.HasOne(d => d.IdEspecialidadNavigation).WithMany(p => p.EspecialistasEspecialidades)
+                .HasForeignKey(d => d.IdEspecialidad)
+                .HasConstraintName("FK__Especiali__IdEsp__10566F31");
+
+            entity.HasOne(d => d.IdEspecialistaNavigation).WithMany(p => p.EspecialistasEspecialidades)
+                .HasForeignKey(d => d.IdEspecialista)
+                .HasConstraintName("FK__Especiali__IdEsp__0F624AF8");
         });
 
         modelBuilder.Entity<Notificacione>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Notifica__3213E83F83D17C7D");
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3213E83FB2F19EB2");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Contenido)
@@ -228,11 +273,15 @@ public partial class DbdirectorioContext : DbContext
                 .HasColumnName("fechaEnvio");
             entity.Property(e => e.IdCita).HasColumnName("id_cita");
             entity.Property(e => e.Leido).HasColumnName("leido");
+
+            entity.HasOne(d => d.IdCitaNavigation).WithMany(p => p.Notificaciones)
+                .HasForeignKey(d => d.IdCita)
+                .HasConstraintName("FK_Notificaciones_Citas");
         });
 
         modelBuilder.Entity<Paciente>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Paciente__3214EC07C7003213");
+            entity.HasKey(e => e.Id).HasName("PK__Paciente__3214EC07030D29DB");
 
             entity.Property(e => e.Activo).HasColumnName("activo");
             entity.Property(e => e.Apellido)
@@ -272,21 +321,15 @@ public partial class DbdirectorioContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
-        });
 
-        modelBuilder.Entity<Role>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC077A60307E");
-
-            entity.Property(e => e.NombreRol)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("nombreRol");
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Pacientes)
+                .HasForeignKey(d => d.IdRol)
+                .HasConstraintName("FK_Pacientes_RolesUsuario");
         });
 
         modelBuilder.Entity<RolesUsuario>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__RolesUsu__3214EC07405C5141");
+            entity.HasKey(e => e.Id).HasName("PK__RolesUsu__3214EC07A03C4CAF");
 
             entity.ToTable("RolesUsuario");
 

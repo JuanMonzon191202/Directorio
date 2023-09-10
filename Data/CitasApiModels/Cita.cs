@@ -22,4 +22,12 @@ public partial class Cita
     public string? Estado { get; set; }
 
     public bool? Eliminado { get; set; }
+
+    public virtual CentrosMedicosClinica? IdCmcNavigation { get; set; }
+
+    public virtual Especialista? IdEspecialistaNavigation { get; set; }
+
+    public virtual Paciente? IdPacienteNavigation { get; set; }
+
+    public virtual ICollection<Notificacione> Notificaciones { get; set; } = new List<Notificacione>();
 }

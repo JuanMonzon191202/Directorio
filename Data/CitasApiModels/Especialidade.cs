@@ -8,4 +8,8 @@ public partial class Especialidade
     public int Id { get; set; }
 
     public string? Nombre { get; set; }
+
+    public virtual ICollection<Especialista> Especialista { get; set; } = new List<Especialista>();
+
+    public virtual ICollection<EspecialistasEspecialidade> EspecialistasEspecialidades { get; set; } = new List<EspecialistasEspecialidade>();
 }

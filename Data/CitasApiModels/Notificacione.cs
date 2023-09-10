@@ -14,4 +14,6 @@ public partial class Notificacione
     public bool? Leido { get; set; }
 
     public DateTime? FechaEnvio { get; set; }
+
+    public virtual Cita? IdCitaNavigation { get; set; }
 }

@@ -142,7 +142,8 @@ public IActionResult Update(int id, Especialista especialista)
         especialistaToUpdate.Activo = especialista.Activo;
     }
 
-    _service.Update(especialistaToUpdate); // Actualiza en la base de datos
+    _service.Update(especialistaToUpdate); // Actualiza en la base de datos no se como es que funciona pero funciona
+    //TODO Corregir esto, las evaluaciones van en el service y ya se pasaria especialista como parametro :)
     return NoContent();
 }
 

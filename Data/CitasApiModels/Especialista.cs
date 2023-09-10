@@ -36,4 +36,14 @@ public partial class Especialista
     public DateTime? FechaRegistro { get; set; }
 
     public bool? Activo { get; set; }
+
+    public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
+
+    public virtual ICollection<EspecialistasEspecialidade> EspecialistasEspecialidades { get; set; } = new List<EspecialistasEspecialidade>();
+
+    public virtual Especialidade? IdEspecialidadNavigation { get; set; }
+
+    public virtual Administradore? IdResponsableNavigation { get; set; }
+
+    public virtual RolesUsuario? IdRolNavigation { get; set; }
 }
