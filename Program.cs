@@ -25,6 +25,8 @@ builder.Services.AddScoped<CMCService>();
 builder.Services.AddScoped<AdminService>();
 // inyectar servicio Especialidades
 builder.Services.AddScoped<EspecialidadesService>();
+// inyectar servicio de Cita
+builder.Services.AddScoped<CitasService>();
 
 
 
