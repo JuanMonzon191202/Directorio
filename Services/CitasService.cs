@@ -18,6 +18,19 @@ public class CitasService{
     public Cita? GetById(int id){
         return _context.Citas.Find(id);
     }
+    /*
+    citas por especialista o CMC
+    */
+    public IEnumerable<Cita> GetCitasPorEspecialista(int idEspecialista)
+    {
+        return _context.Citas.Where(c => c.IdEspecialista == idEspecialista).ToList();
+    }
+
+    public IEnumerable<Cita> GetCitasPorCMC(int idCMC)
+    {
+        return _context.Citas.Where(c => c.IdCmc == idCMC).ToList();
+    }
+
 
     public Cita Create(Cita newCita){
 

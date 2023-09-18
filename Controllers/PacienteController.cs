@@ -18,13 +18,13 @@ public class PacientesController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("getpaciente")]
+    [HttpGet("paciente")]
     public IEnumerable<Paciente> Get()
     {
         return _service.GetAll();
     }
 
-    [HttpGet("getpaciente/{id}")]
+    [HttpGet("paciente/{id}")]
     public ActionResult<Paciente> GetById(int id)
     {
         var pacienteFind = _service.GetById(id);
@@ -37,7 +37,7 @@ public class PacientesController : ControllerBase
         return pacienteFind;
     }
 
-    [HttpPost("postpaciente")]
+    [HttpPost("paciente")]
     public IActionResult Create(Paciente paciente)
     {
         var newPaciente = _service.Create(paciente);
@@ -45,7 +45,7 @@ public class PacientesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = newPaciente.Id }, newPaciente);
     }
 
-    [HttpPut("putpaciente/{id}")]
+    [HttpPut("paciente/{id}")]
     public IActionResult Update(int id, Paciente paciente)
     {
         if (id != paciente.Id)

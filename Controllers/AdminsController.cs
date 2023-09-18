@@ -18,13 +18,13 @@ public class AdminsController : ControllerBase
         metodo get all admins
     */
 
-    [HttpGet("getadmins")]
+    [HttpGet("admins")]
     public IEnumerable<Administradore> Get()
     {
         return _service.GetAll();
     }
 
-    [HttpGet("getadmin/{id}")]
+    [HttpGet("adminFind/{id}")]
     public ActionResult<Administradore> GetById(int id){
 
         var adminFind = _service.GetById(id);
@@ -38,7 +38,7 @@ public class AdminsController : ControllerBase
     /*
     post para crear admins
     */
-    [HttpPost("postadmin")]
+    [HttpPost("createAdmin")]
     public IActionResult Create(Administradore admin){
         var newAdmin = _service.Create(admin);
         return CreatedAtAction(nameof(GetById), new{id = newAdmin.Id}, newAdmin);

@@ -22,7 +22,7 @@ public class CMCController : ControllerBase
    metodo para listar los CMC [centros medicos o Clinicas] con un get 
    */
 
-    [HttpGet("getCMC")]
+    [HttpGet("centrosmedicosclinicas")]
     public IEnumerable<CentrosMedicosClinica> Get()
     {
         return _service.GetAll();
@@ -32,7 +32,7 @@ public class CMCController : ControllerBase
     metodo GetById para las CMC
     */
 
-    [HttpGet("getpaciente/{id}")]
+    [HttpGet("centrosmedicosclinicas/{id}")]
     public ActionResult<CentrosMedicosClinica> GetById(int id){
         var CMCFind = _service.GetById(id);
 
@@ -46,14 +46,14 @@ public class CMCController : ControllerBase
     metodo crear con post nuevo CMC
     */
 
-    [HttpPost("postCMC")]
+    [HttpPost("centrosmedicosclinicas")]
     public IActionResult Create(CentrosMedicosClinica cmc){
         var newCMC = _service.Create(cmc);
 
         return CreatedAtAction(nameof(GetById),new {id = newCMC.Id}, newCMC);
     }
 
-    [HttpPut("putCMC/{id}")]
+    [HttpPut("centrosmedicosclinicas/{id}")]
     public IActionResult Update(int id, CentrosMedicosClinica cmc){
         if (id != cmc.Id){
             return BadRequest("El ID proporcionado no coincide con el ID del paciente.");

@@ -11,6 +11,8 @@ public partial class EspecialistasEspecialidade
 
     public int? IdEspecialidad { get; set; }
 
+    public virtual ICollection<CentrosMedicosClinica> CentrosMedicosClinicas { get; set; } = new List<CentrosMedicosClinica>();
+
     public virtual Especialidade? IdEspecialidadNavigation { get; set; }
 
     public virtual Especialista? IdEspecialistaNavigation { get; set; }

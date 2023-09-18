@@ -20,14 +20,14 @@ public class EspecialidadesController : ControllerBase{
 
     // getAll Especialidades
 
-    [HttpGet("getespecialidades")]
+    [HttpGet("especialidades")]
     public IEnumerable<Especialidade> Get(){
 
         return _service.GetAll();
     }
 
     // GetById Especialidades
-    [HttpGet("getespecialidades/{id}")]
+    [HttpGet("especialidades/{id}")]
     public ActionResult<Especialidade> GetById(int id){
         var especialidadFind = _service.GetById(id);
 
@@ -38,15 +38,15 @@ public class EspecialidadesController : ControllerBase{
     }
 
     // Crear nueva especialidad (post)
-    [HttpPost("postespecialidad")]
+    [HttpPost("especialidades")]
     public IActionResult Create(Especialidade especialidade){
         var newEspecialidade = _service.Create(especialidade);
 
         return CreatedAtAction(nameof(GetById),new {id = newEspecialidade.Id}, newEspecialidade);
     }
 
-    // actualizar especialidades 
-    [HttpPut("putespecialidades")]
+    // actualizar especialidades ---se agrego parámetro en la URL para identificar la especialidad específica que se va a actualizar
+    [HttpPut("especialidades/{id}")]
     public IActionResult Update(int id, Especialidade especialidade){
         if (id != especialidade.Id){
             return BadRequest("El ID proporcionado no coincide con el ID de la Especialidad.");

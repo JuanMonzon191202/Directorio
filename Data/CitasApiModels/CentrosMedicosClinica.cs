@@ -11,6 +11,8 @@ public partial class CentrosMedicosClinica
 
     public int? IdResponsable { get; set; }
 
+    public int? IdEspecialistaEspecialidad { get; set; }
+
     public string? NombreCompletoResponsable { get; set; }
 
     public string? ResponsableCorreo { get; set; }
@@ -42,6 +44,8 @@ public partial class CentrosMedicosClinica
     public bool? Activo { get; set; }
 
     public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
+
+    public virtual EspecialistasEspecialidade? IdEspecialistaEspecialidadNavigation { get; set; }
 
     public virtual Administradore? IdResponsableNavigation { get; set; }
 
