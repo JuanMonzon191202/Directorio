@@ -60,18 +60,7 @@ public class EspecialistasController : ControllerBase
     prueba busqueda con where
     */
 
-    [HttpGet("especialidad/{idEspecialidad}")]
-        public IActionResult GetEspecialistasPorEspecialidad(int idEspecialidad)
-        {
-            var especialistas = _service.GetEspecialistasPorEspecialidad(idEspecialidad);
-
-            if (especialistas == null || !especialistas.Any())
-            {
-                return NotFound("No se encontraron especialistas para la especialidad especificada.");
-            }
-
-            return Ok(especialistas);
-        }
+    
 
         // Nueva acción GET para buscar especialistas por especialidad
     [HttpGet("por-especialidad/{especialidadId}")]
@@ -119,30 +108,14 @@ public class EspecialistasController : ControllerBase
         }
 
         // Actualiza solo los campos que no son nulos en la solicitud
-        if (especialista.NombreCompleto != null)
-        {
-            especialistaToUpdate.NombreCompleto = especialista.NombreCompleto;
-        }
+       
 
         if (especialista.Correo != null)
         {
             especialistaToUpdate.Correo = especialista.Correo;
         }
 
-        if (especialista.Contrasenia != null)
-        {
-            especialistaToUpdate.Contrasenia = especialista.Contrasenia;
-        }
-
-        if (especialista.FechaNac != null)
-        {
-            especialistaToUpdate.FechaNac = especialista.FechaNac;
-        }
-
-        if (especialista.Genero != null)
-        {
-            especialistaToUpdate.Genero = especialista.Genero;
-        }
+      
 
         if (especialista.Direccion != null)
         {
@@ -169,15 +142,7 @@ public class EspecialistasController : ControllerBase
             especialistaToUpdate.NumCedula = especialista.NumCedula;
         }
 
-        if (especialista.FechaRegistro != null)
-        {
-            especialistaToUpdate.FechaRegistro = especialista.FechaRegistro;
-        }
-
-        if (especialista.Activo != null)
-        {
-            especialistaToUpdate.Activo = especialista.Activo;
-        }
+       
 
         _service.Update(especialistaToUpdate); // Actualiza en la base de datos no se como es que funciona pero funciona
         //TODO Corregir esto, las evaluaciones van en el service y ya se pasaria especialista como parametro :)

@@ -54,25 +54,6 @@ public class PacienteService
         // Actualizar solo los campos que se proporcionaron en la solicitud PUT
         existingPaciente.IdRol = paciente.IdRol;
 
-        if (paciente.Nombre != null)
-        {
-            existingPaciente.Nombre = paciente.Nombre;
-        }
-
-        if (paciente.Apellido != null)
-        {
-            existingPaciente.Apellido = paciente.Apellido;
-        }
-
-        if (paciente.Correo != null)
-        {
-            existingPaciente.Correo = paciente.Correo;
-        }
-
-        if (paciente.Contrasenia != null)
-        {
-            existingPaciente.Contrasenia = paciente.Contrasenia;
-        }
 
         if (paciente.FechaNac != null)
         {
@@ -97,16 +78,6 @@ public class PacienteService
         if (paciente.Pais != null)
         {
             existingPaciente.Pais = paciente.Pais;
-        }
-
-        if (paciente.FechaRegistro != null)
-        {
-            existingPaciente.FechaRegistro = paciente.FechaRegistro;
-        }
-
-        if (paciente.Activo != null)
-        {
-            existingPaciente.Activo = paciente.Activo;
         }
 
         // Guardar los cambios en la base de datos

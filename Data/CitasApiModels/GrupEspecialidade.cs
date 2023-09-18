@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 namespace CitasMedicasAPI.Data.CitasApiModels;
 
-public partial class EspecialistasEspecialidade
+public partial class GrupEspecialidade
 {
     public int Id { get; set; }
 
     public int? IdEspecialista { get; set; }
+
+    public int? IdCMC { get; set; }
+
 
     public int? IdEspecialidad { get; set; }
 
@@ -16,4 +19,6 @@ public partial class EspecialistasEspecialidade
     public virtual Especialidade? IdEspecialidadNavigation { get; set; }
 
     public virtual Especialista? IdEspecialistaNavigation { get; set; }
+
+    public virtual CentrosMedicosClinica? idCentrosMedicosClinicaNavigation { get; set; }
 }

@@ -22,7 +22,7 @@ builder.Services.AddScoped<EspecialistaService>();
 builder.Services.AddScoped<CMCService>();
 //TODO
 //inyectar servicio administradores
-builder.Services.AddScoped<AdminService>();
+// builder.Services.AddScoped<AdminService>();
 // inyectar servicio Especialidades
 builder.Services.AddScoped<EspecialidadesService>();
 // inyectar servicio de Cita

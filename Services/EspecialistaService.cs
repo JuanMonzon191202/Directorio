@@ -22,17 +22,17 @@ public class EspecialistaService
         return _context.Especialistas.Find(id);
     }
 
-    public IEnumerable<Especialista> GetEspecialistasPorEspecialidad(int idEspecialidad)
-    {
-        return _context.Especialistas.Where(e => e.IdEspecialidad == idEspecialidad).ToList();
-    }
+    // public IEnumerable<Especialista> GetEspecialistasPorEspecialidad(int idEspecialidad)
+    // {
+    //     return _context.Especialistas.Where(e => e.IdEspecialidad == idEspecialidad).ToList();
+    // }
 
     public IEnumerable<Especialista> GetEspecialistasByEspecialidad(int especialidadId)
     {
         // Utiliza LINQ para filtrar los especialistas por el ID de la especialidad
         var especialistas = _context.Especialistas
             .Where(
-                e => e.EspecialistasEspecialidades.Any(es => es.IdEspecialidad == especialidadId)
+                e => e.GrupEspecialidades.Any(es => es.IdEspecialidad == especialidadId)
             )
             .ToList();
 
@@ -69,22 +69,12 @@ return query.ToList();
         if (existingEspecialista != null)
         {
             existingEspecialista.Id = especialista.Id;
-            existingEspecialista.IdRol = especialista.IdRol;
-            existingEspecialista.IdEspecialidad = especialista.IdEspecialidad;
-            existingEspecialista.NombreCompleto = especialista.NombreCompleto;
             existingEspecialista.Correo = especialista.Correo;
-            existingEspecialista.Contrasenia = especialista.Contrasenia;
-            existingEspecialista.FechaNac = especialista.FechaNac;
-            existingEspecialista.Genero = especialista.Genero;
             existingEspecialista.Direccion = especialista.Direccion;
             existingEspecialista.Telefono = especialista.Telefono;
             existingEspecialista.Ciudad = especialista.Ciudad;
             existingEspecialista.Pais = especialista.Pais;
             existingEspecialista.NumCedula = especialista.NumCedula;
-            existingEspecialista.FechaRegistro = especialista.FechaRegistro;
-            existingEspecialista.Activo = especialista.Activo;
-            existingEspecialista.EspecialistasEspecialidades =
-                especialista.EspecialistasEspecialidades;
 
             _context.SaveChanges();
         }

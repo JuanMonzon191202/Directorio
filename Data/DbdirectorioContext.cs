@@ -15,16 +15,17 @@ namespace CitasMedicasAPI.Data
         public virtual DbSet<Cita> Citas { get; set; }
         public virtual DbSet<Especialidade> Especialidades { get; set; }
         public virtual DbSet<Especialista> Especialistas { get; set; }
-        public virtual DbSet<EspecialistasEspecialidade> EspecialistasEspecialidades { get; set; }
+        public virtual DbSet<GrupEspecialidade> EspecialistasEspecialidades { get; set; }
         public virtual DbSet<Notificacione> Notificaciones { get; set; }
         public virtual DbSet<Paciente> Pacientes { get; set; }
         public virtual DbSet<RolesUsuario> RolesUsuarios { get; set; }
+        public virtual DbSet<Usuario> Usuarios {get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=DBDirectorio;Trusted_connection=true;Encrypt=False");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=DBDirectorio2;Trusted_connection=true;Encrypt=False");
             }
         }
 
@@ -34,7 +35,7 @@ namespace CitasMedicasAPI.Data
 
             // Configuración de relaciones
             modelBuilder.Entity<CentrosMedicosClinica>()
-                .HasOne(cmc => cmc.IdEspecialistaEspecialidadNavigation)
+                .HasOne(cmc => cmc.IdGrupEspecialidadeNavigation)
                 .WithMany(ese => ese.CentrosMedicosClinicas)
                 .HasForeignKey(cmc => cmc.IdEspecialistaEspecialidad);
 

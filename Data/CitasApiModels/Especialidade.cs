@@ -11,5 +11,5 @@ public partial class Especialidade
 
     public virtual ICollection<Especialista> Especialista { get; set; } = new List<Especialista>();
 
-    public virtual ICollection<EspecialistasEspecialidade> EspecialistasEspecialidades { get; set; } = new List<EspecialistasEspecialidade>();
+    public virtual ICollection<GrupEspecialidade>GrupEspecialidades { get; set; } = new List<GrupEspecialidade>();
 }

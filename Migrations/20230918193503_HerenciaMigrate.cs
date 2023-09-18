@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CitasMedicasAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class DirectorioMigrations : Migration
+    public partial class HerenciaMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +16,7 @@ namespace CitasMedicasAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contraseña = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -55,28 +50,42 @@ namespace CitasMedicasAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Especialistas",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdRol = table.Column<int>(type: "int", nullable: true),
-                    IdResponsable = table.Column<int>(type: "int", nullable: true),
-                    IdEspecialidad = table.Column<int>(type: "int", nullable: true),
-                    NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contrasenia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaNac = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Contraseña = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Activo = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Especialistas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdResponsable = table.Column<int>(type: "int", nullable: true),
+                    IdEspecialistaEspecialidad = table.Column<int>(type: "int", nullable: true),
+                    Cargo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Pais = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumCedula = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Activo = table.Column<bool>(type: "bit", nullable: true),
-                    IdEspecialidadNavigationId = table.Column<int>(type: "int", nullable: true),
-                    IdRolNavigationId = table.Column<int>(type: "int", nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EspecialidadeId = table.Column<int>(type: "int", nullable: true),
+                    RolesUsuarioId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -87,13 +96,13 @@ namespace CitasMedicasAPI.Migrations
                         principalTable: "Administradores",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Especialistas_Especialidades_IdEspecialidadNavigationId",
-                        column: x => x.IdEspecialidadNavigationId,
+                        name: "FK_Especialistas_Especialidades_EspecialidadeId",
+                        column: x => x.EspecialidadeId,
                         principalTable: "Especialidades",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Especialistas_RolesUsuarios_IdRolNavigationId",
-                        column: x => x.IdRolNavigationId,
+                        name: "FK_Especialistas_RolesUsuarios_RolesUsuarioId",
+                        column: x => x.RolesUsuarioId,
                         principalTable: "RolesUsuarios",
                         principalColumn: "Id");
                 });
@@ -105,17 +114,11 @@ namespace CitasMedicasAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdRol = table.Column<int>(type: "int", nullable: true),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contrasenia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaNac = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Pais = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Activo = table.Column<bool>(type: "bit", nullable: true),
+                    FechaNac = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdRolNavigationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -129,32 +132,6 @@ namespace CitasMedicasAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EspecialistasEspecialidades",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdEspecialista = table.Column<int>(type: "int", nullable: true),
-                    IdEspecialidad = table.Column<int>(type: "int", nullable: true),
-                    IdEspecialidadNavigationId = table.Column<int>(type: "int", nullable: true),
-                    IdEspecialistaNavigationId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EspecialistasEspecialidades", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EspecialistasEspecialidades_Especialidades_IdEspecialidadNavigationId",
-                        column: x => x.IdEspecialidadNavigationId,
-                        principalTable: "Especialidades",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_EspecialistasEspecialidades_Especialistas_IdEspecialistaNavigationId",
-                        column: x => x.IdEspecialistaNavigationId,
-                        principalTable: "Especialistas",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CentrosMedicosClinicas",
                 columns: table => new
                 {
@@ -163,21 +140,15 @@ namespace CitasMedicasAPI.Migrations
                     IdRol = table.Column<int>(type: "int", nullable: true),
                     IdResponsable = table.Column<int>(type: "int", nullable: true),
                     IdEspecialistaEspecialidad = table.Column<int>(type: "int", nullable: true),
-                    NombreCompletoResponsable = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponsableCorreo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponsableTelefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResponsableCiudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NombreCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DireccionCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonalCountCmc = table.Column<int>(type: "int", nullable: true),
-                    CiudadCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaisCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TelefonoCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CorreoCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SitioWebCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DescripcionCmc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Activo = table.Column<bool>(type: "bit", nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonalCount = table.Column<int>(type: "int", nullable: true),
+                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Pais = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SitioWeb = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,11 +157,6 @@ namespace CitasMedicasAPI.Migrations
                         name: "FK_CentrosMedicosClinicas_Administradores_IdResponsable",
                         column: x => x.IdResponsable,
                         principalTable: "Administradores",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CentrosMedicosClinicas_EspecialistasEspecialidades_IdEspecialistaEspecialidad",
-                        column: x => x.IdEspecialistaEspecialidad,
-                        principalTable: "EspecialistasEspecialidades",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CentrosMedicosClinicas_RolesUsuarios_IdRol",
@@ -231,6 +197,39 @@ namespace CitasMedicasAPI.Migrations
                         name: "FK_Citas_Pacientes_IdPaciente",
                         column: x => x.IdPaciente,
                         principalTable: "Pacientes",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EspecialistasEspecialidades",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdEspecialista = table.Column<int>(type: "int", nullable: true),
+                    IdCMC = table.Column<int>(type: "int", nullable: true),
+                    IdEspecialidad = table.Column<int>(type: "int", nullable: true),
+                    IdEspecialidadNavigationId = table.Column<int>(type: "int", nullable: true),
+                    IdEspecialistaNavigationId = table.Column<int>(type: "int", nullable: true),
+                    idCentrosMedicosClinicaNavigationId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EspecialistasEspecialidades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EspecialistasEspecialidades_CentrosMedicosClinicas_idCentrosMedicosClinicaNavigationId",
+                        column: x => x.idCentrosMedicosClinicaNavigationId,
+                        principalTable: "CentrosMedicosClinicas",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EspecialistasEspecialidades_Especialidades_IdEspecialidadNavigationId",
+                        column: x => x.IdEspecialidadNavigationId,
+                        principalTable: "Especialidades",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EspecialistasEspecialidades_Especialistas_IdEspecialistaNavigationId",
+                        column: x => x.IdEspecialistaNavigationId,
+                        principalTable: "Especialistas",
                         principalColumn: "Id");
                 });
 
@@ -286,9 +285,9 @@ namespace CitasMedicasAPI.Migrations
                 column: "IdPaciente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Especialistas_IdEspecialidadNavigationId",
+                name: "IX_Especialistas_EspecialidadeId",
                 table: "Especialistas",
-                column: "IdEspecialidadNavigationId");
+                column: "EspecialidadeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Especialistas_IdResponsable",
@@ -296,9 +295,14 @@ namespace CitasMedicasAPI.Migrations
                 column: "IdResponsable");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Especialistas_IdRolNavigationId",
+                name: "IX_Especialistas_RolesUsuarioId",
                 table: "Especialistas",
-                column: "IdRolNavigationId");
+                column: "RolesUsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EspecialistasEspecialidades_idCentrosMedicosClinicaNavigationId",
+                table: "EspecialistasEspecialidades",
+                column: "idCentrosMedicosClinicaNavigationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EspecialistasEspecialidades_IdEspecialidadNavigationId",
@@ -319,31 +323,53 @@ namespace CitasMedicasAPI.Migrations
                 name: "IX_Pacientes_IdRolNavigationId",
                 table: "Pacientes",
                 column: "IdRolNavigationId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_CentrosMedicosClinicas_EspecialistasEspecialidades_IdEspecialistaEspecialidad",
+                table: "CentrosMedicosClinicas",
+                column: "IdEspecialistaEspecialidad",
+                principalTable: "EspecialistasEspecialidades",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_CentrosMedicosClinicas_Administradores_IdResponsable",
+                table: "CentrosMedicosClinicas");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Especialistas_Administradores_IdResponsable",
+                table: "Especialistas");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_CentrosMedicosClinicas_EspecialistasEspecialidades_IdEspecialistaEspecialidad",
+                table: "CentrosMedicosClinicas");
+
             migrationBuilder.DropTable(
                 name: "Notificaciones");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Citas");
 
             migrationBuilder.DropTable(
-                name: "CentrosMedicosClinicas");
+                name: "Pacientes");
 
             migrationBuilder.DropTable(
-                name: "Pacientes");
+                name: "Administradores");
 
             migrationBuilder.DropTable(
                 name: "EspecialistasEspecialidades");
 
             migrationBuilder.DropTable(
-                name: "Especialistas");
+                name: "CentrosMedicosClinicas");
 
             migrationBuilder.DropTable(
-                name: "Administradores");
+                name: "Especialistas");
 
             migrationBuilder.DropTable(
                 name: "Especialidades");

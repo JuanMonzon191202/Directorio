@@ -13,39 +13,27 @@ public partial class CentrosMedicosClinica
 
     public int? IdEspecialistaEspecialidad { get; set; }
 
-    public string? NombreCompletoResponsable { get; set; }
+    public string? Nombre { get; set; }
 
-    public string? ResponsableCorreo { get; set; }
+    public string? Direccion { get; set; }
 
-    public string? ResponsableTelefono { get; set; }
+    public int? PersonalCount { get; set; }
 
-    public string? ResponsableCiudad { get; set; }
+    public string? Ciudad { get; set; }
 
-    public string? NombreCmc { get; set; }
+    public string? Pais { get; set; }
 
-    public string? DireccionCmc { get; set; }
+    public string? Telefono{ get; set; }
 
-    public int? PersonalCountCmc { get; set; }
+    public string? Correo { get; set; }
 
-    public string? CiudadCmc { get; set; }
+    public string? SitioWeb { get; set; }
 
-    public string? PaisCmc { get; set; }
-
-    public string? TelefonoCmc { get; set; }
-
-    public string? CorreoCmc { get; set; }
-
-    public string? SitioWebCmc { get; set; }
-
-    public string? DescripcionCmc { get; set; }
-
-    public DateTime? FechaRegistro { get; set; }
-
-    public bool? Activo { get; set; }
+    public string? Descripcion { get; set; }
 
     public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
 
-    public virtual EspecialistasEspecialidade? IdEspecialistaEspecialidadNavigation { get; set; }
+    public virtual GrupEspecialidade? IdGrupEspecialidadeNavigation { get; set; }
 
     public virtual Administradore? IdResponsableNavigation { get; set; }
 
