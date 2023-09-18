@@ -13,13 +13,13 @@ dotnet run
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
--
-                                          -DataBaseFirst-
-dotnet ef dbcontext scaffold
+
+                                          DataBaseFirst
+-dotnet ef dbcontext scaffold
 "Server=localhost\SQLEXPRESS;Database=DBDirectorio;Trusted_connection=true;Encrypt=False"
-Microsoft.EntityFrameworkCore.SqlServer --context-dir .\Data --output-dir .\Data\CitasApiModels
+Microsoft.EntityFrameworkCore.SqlServer --context-dir .\Data --output-dir .\Data\CitasApiModels-
 
 
 
--
+
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
