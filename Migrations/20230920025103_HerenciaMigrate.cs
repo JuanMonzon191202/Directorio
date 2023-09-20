@@ -113,13 +113,14 @@ namespace CitasMedicasAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdRol = table.Column<int>(type: "int", nullable: true),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Pais = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FechaNac = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IdRolNavigationId = table.Column<int>(type: "int", nullable: true)
+                    IdRolNavigationId = table.Column<int>(type: "int", nullable: true),
+                    IdUsuarioNavigationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,6 +130,12 @@ namespace CitasMedicasAPI.Migrations
                         column: x => x.IdRolNavigationId,
                         principalTable: "RolesUsuarios",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Pacientes_Usuarios_IdUsuarioNavigationId",
+                        column: x => x.IdUsuarioNavigationId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,6 +146,7 @@ namespace CitasMedicasAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdRol = table.Column<int>(type: "int", nullable: true),
                     IdResponsable = table.Column<int>(type: "int", nullable: true),
+                    IdUsuario = table.Column<int>(type: "int", nullable: true),
                     IdEspecialistaEspecialidad = table.Column<int>(type: "int", nullable: true),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -148,7 +156,8 @@ namespace CitasMedicasAPI.Migrations
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SitioWeb = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdUsuarioNavigationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -162,6 +171,11 @@ namespace CitasMedicasAPI.Migrations
                         name: "FK_CentrosMedicosClinicas_RolesUsuarios_IdRol",
                         column: x => x.IdRol,
                         principalTable: "RolesUsuarios",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CentrosMedicosClinicas_Usuarios_IdUsuarioNavigationId",
+                        column: x => x.IdUsuarioNavigationId,
+                        principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
 
@@ -270,6 +284,11 @@ namespace CitasMedicasAPI.Migrations
                 column: "IdRol");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CentrosMedicosClinicas_IdUsuarioNavigationId",
+                table: "CentrosMedicosClinicas",
+                column: "IdUsuarioNavigationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Citas_IdCmc",
                 table: "Citas",
                 column: "IdCmc");
@@ -324,6 +343,11 @@ namespace CitasMedicasAPI.Migrations
                 table: "Pacientes",
                 column: "IdRolNavigationId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_Pacientes_IdUsuarioNavigationId",
+                table: "Pacientes",
+                column: "IdUsuarioNavigationId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_CentrosMedicosClinicas_EspecialistasEspecialidades_IdEspecialistaEspecialidad",
                 table: "CentrosMedicosClinicas",
@@ -351,9 +375,6 @@ namespace CitasMedicasAPI.Migrations
                 name: "Notificaciones");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
-
-            migrationBuilder.DropTable(
                 name: "Citas");
 
             migrationBuilder.DropTable(
@@ -370,6 +391,9 @@ namespace CitasMedicasAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Especialistas");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Especialidades");

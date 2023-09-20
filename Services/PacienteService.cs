@@ -45,44 +45,44 @@ public class PacienteService
 
     /*
        metodo put para pacientes
-       */public void Update(Paciente paciente)
-{
-    var existingPaciente = GetById(paciente.Id);
-
-    if (existingPaciente != null)
+       */
+    public void Update(Paciente paciente)
     {
-        // Actualizar solo los campos que se proporcionaron en la solicitud PUT
-        existingPaciente.IdRol = paciente.IdRol;
+        var existingPaciente = GetById(paciente.Id);
 
-
-        if (paciente.FechaNac != null)
+        if (existingPaciente != null)
         {
-            existingPaciente.FechaNac = paciente.FechaNac;
-        }
+            // Actualizar solo los campos que se proporcionaron en la solicitud PUT
 
-        if (paciente.Genero != null)
-        {
-            existingPaciente.Genero = paciente.Genero;
-        }
 
-        if (paciente.Telefono != null)
-        {
-            existingPaciente.Telefono = paciente.Telefono;
-        }
+            if (paciente.FechaNac != null)
+            {
+                existingPaciente.FechaNac = paciente.FechaNac;
+            }
 
-        if (paciente.Ciudad != null)
-        {
-            existingPaciente.Ciudad = paciente.Ciudad;
-        }
+            if (paciente.Genero != null)
+            {
+                existingPaciente.Genero = paciente.Genero;
+            }
 
-        if (paciente.Pais != null)
-        {
-            existingPaciente.Pais = paciente.Pais;
-        }
+            if (paciente.Telefono != null)
+            {
+                existingPaciente.Telefono = paciente.Telefono;
+            }
 
-        // Guardar los cambios en la base de datos
-        _context.SaveChanges();
+            if (paciente.Ciudad != null)
+            {
+                existingPaciente.Ciudad = paciente.Ciudad;
+            }
+
+            if (paciente.Pais != null)
+            {
+                existingPaciente.Pais = paciente.Pais;
+            }
+
+            // Guardar los cambios en la base de datos
+            _context.SaveChanges();
+        }
     }
-}
 
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CitasMedicasAPI.Migrations
 {
     [DbContext(typeof(DbdirectorioContext))]
-    [Migration("20230918193503_HerenciaMigrate")]
+    [Migration("20230920025103_HerenciaMigrate")]
     partial class HerenciaMigrate
     {
         /// <inheritdoc />
@@ -67,6 +67,12 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<int?>("IdRol")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdUsuarioNavigationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
@@ -89,6 +95,8 @@ namespace CitasMedicasAPI.Migrations
                     b.HasIndex("IdResponsable");
 
                     b.HasIndex("IdRol");
+
+                    b.HasIndex("IdUsuarioNavigationId");
 
                     b.ToTable("CentrosMedicosClinicas");
                 });
@@ -288,10 +296,13 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<string>("Genero")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdRol")
+                    b.Property<int?>("IdRolNavigationId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdRolNavigationId")
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuarioNavigationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Pais")
@@ -303,6 +314,8 @@ namespace CitasMedicasAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdRolNavigationId");
+
+                    b.HasIndex("IdUsuarioNavigationId");
 
                     b.ToTable("Pacientes");
                 });
@@ -371,11 +384,17 @@ namespace CitasMedicasAPI.Migrations
                         .WithMany("CentrosMedicosClinicas")
                         .HasForeignKey("IdRol");
 
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "IdUsuarioNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdUsuarioNavigationId");
+
                     b.Navigation("IdGrupEspecialidadeNavigation");
 
                     b.Navigation("IdResponsableNavigation");
 
                     b.Navigation("IdRolNavigation");
+
+                    b.Navigation("IdUsuarioNavigation");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Cita", b =>
@@ -452,7 +471,15 @@ namespace CitasMedicasAPI.Migrations
                         .WithMany("Pacientes")
                         .HasForeignKey("IdRolNavigationId");
 
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "IdUsuarioNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdUsuarioNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("IdRolNavigation");
+
+                    b.Navigation("IdUsuarioNavigation");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Administradore", b =>

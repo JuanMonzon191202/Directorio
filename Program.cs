@@ -29,6 +29,8 @@ builder.Services.AddScoped<EspecialidadesService>();
 builder.Services.AddScoped<CitasService>();
 // inyectar servicio de Roles
 builder.Services.AddScoped<RolesService>();
+//inyectar servicio de usuarios
+builder.Services.AddScoped<UsuarioService>();
 
 
 

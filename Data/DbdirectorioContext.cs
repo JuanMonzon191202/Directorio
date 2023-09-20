@@ -25,7 +25,7 @@ namespace CitasMedicasAPI.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=DBDirectorio2;Trusted_connection=true;Encrypt=False");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Directorio;Trusted_connection=true;Encrypt=False");
             }
         }
 
@@ -78,7 +78,11 @@ namespace CitasMedicasAPI.Data
                 .HasOne(notif => notif.IdCitaNavigation)
                 .WithMany(cita => cita.Notificaciones)
                 .HasForeignKey(notif => notif.IdCita);
-
+            modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.IdRolNavigation)  // Nombre de la propiedad de navegación en Usuario
+                .WithMany()  // No se necesita especificar la propiedad de navegación en RolesUsuario
+                .HasForeignKey(u => u.IdRol)  // Clave foránea en Usuario que relaciona con Id en RolesUsuario
+                .OnDelete(DeleteBehavior.Restrict);  // Puedes establecer el comportamiento de eliminación según tus necesidades
             
         }
     }

@@ -20,5 +20,6 @@ namespace CitasMedicasAPI.Data.CitasApiModels
         public DateTime? FechaRegistro { get; set; }
 
         public bool? Activo { get; set; }
+       public virtual RolesUsuario? IdRolNavigation { get; set; }
     }
 }

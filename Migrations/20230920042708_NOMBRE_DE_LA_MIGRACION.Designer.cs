@@ -4,6 +4,7 @@ using CitasMedicasAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CitasMedicasAPI.Migrations
 {
     [DbContext(typeof(DbdirectorioContext))]
-    partial class DbdirectorioContextModelSnapshot : ModelSnapshot
+    [Migration("20230920042708_NOMBRE_DE_LA_MIGRACION")]
+    partial class NOMBRE_DE_LA_MIGRACION
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

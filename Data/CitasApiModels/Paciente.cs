@@ -5,9 +5,9 @@ namespace CitasMedicasAPI.Data.CitasApiModels
 {
     public partial class Paciente
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
 
-        public int? IdRol { get; set; }
+        public int IdUsuario { get; set; } // Clave foránea a Usuarios
 
         public string? Genero { get; set; }
 
@@ -21,7 +21,8 @@ namespace CitasMedicasAPI.Data.CitasApiModels
 
         public virtual ICollection<Cita> Cita { get; set; } = new List<Cita>();
 
-       public virtual RolesUsuario? IdRolNavigation { get; set; }
+        public virtual RolesUsuario? IdRolNavigation { get; set; }
+
+        public virtual Usuario IdUsuarioNavigation { get; set; } // Propiedad de navegación a Usuarios
     }
 }
-
