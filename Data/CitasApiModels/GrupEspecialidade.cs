@@ -7,14 +7,14 @@ public partial class GrupEspecialidade
 {
     public int Id { get; set; }
 
-    public int? IdEspecialista { get; set; }
+    public int? IdEspecialista { get; set; } // llave foranea para relacionar los especialistas
 
-    public int? IdCMC { get; set; }
+    public int? IdCMC { get; set; } // llave foranea para relacionar los CMC
 
+    public int IdEspecialidad { get; set; } // llave foranea para relacionar las especialidades
 
-    public int? IdEspecialidad { get; set; }
-
-    public virtual ICollection<CentrosMedicosClinica> CentrosMedicosClinicas { get; set; } = new List<CentrosMedicosClinica>();
+    public virtual ICollection<CentrosMedicosClinica> CentrosMedicosClinicas { get; set; } =
+        new List<CentrosMedicosClinica>();
 
     public virtual Especialidade? IdEspecialidadNavigation { get; set; }
 

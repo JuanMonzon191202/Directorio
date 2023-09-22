@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CitasMedicasAPI.Migrations
 {
     [DbContext(typeof(DbdirectorioContext))]
-    [Migration("20230920025103_HerenciaMigrate")]
-    partial class HerenciaMigrate
+    [Migration("20230922220439_NuevaMig")]
+    partial class NuevaMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,19 +24,6 @@ namespace CitasMedicasAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Administradore", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Administradores");
-                });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.CentrosMedicosClinica", b =>
                 {
@@ -58,7 +45,10 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdEspecialistaEspecialidad")
+                    b.Property<int?>("GrupEspecialidadeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdGupEspecialidad")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdResponsable")
@@ -68,9 +58,6 @@ namespace CitasMedicasAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdUsuarioNavigationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
@@ -90,13 +77,11 @@ namespace CitasMedicasAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEspecialistaEspecialidad");
+                    b.HasIndex("GrupEspecialidadeId");
 
-                    b.HasIndex("IdResponsable");
+                    b.HasIndex("IdGupEspecialidad");
 
-                    b.HasIndex("IdRol");
-
-                    b.HasIndex("IdUsuarioNavigationId");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("CentrosMedicosClinicas");
                 });
@@ -134,12 +119,6 @@ namespace CitasMedicasAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdCmc");
-
-                    b.HasIndex("IdEspecialista");
-
-                    b.HasIndex("IdPaciente");
 
                     b.ToTable("Citas");
                 });
@@ -183,13 +162,13 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<string>("Direccion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EspecialidadeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdEspecialistaEspecialidad")
+                    b.Property<int?>("IdGupEspecialidad")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdResponsable")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
 
                     b.Property<string>("NumCedula")
@@ -198,19 +177,14 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<string>("Pais")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RolesUsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EspecialidadeId");
+                    b.HasIndex("IdGupEspecialidad");
 
-                    b.HasIndex("IdResponsable");
-
-                    b.HasIndex("RolesUsuarioId");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Especialistas");
                 });
@@ -226,7 +200,7 @@ namespace CitasMedicasAPI.Migrations
                     b.Property<int?>("IdCMC")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdEspecialidad")
+                    b.Property<int>("IdEspecialidad")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdEspecialidadNavigationId")
@@ -249,34 +223,7 @@ namespace CitasMedicasAPI.Migrations
 
                     b.HasIndex("idCentrosMedicosClinicaNavigationId");
 
-                    b.ToTable("EspecialistasEspecialidades");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Notificacione", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Contenido")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("FechaEnvio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdCita")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Leido")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCita");
-
-                    b.ToTable("Notificaciones");
+                    b.ToTable("GrupEspecialidades");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Paciente", b =>
@@ -288,34 +235,30 @@ namespace CitasMedicasAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Ciudad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("FechaNac")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Genero")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IdRolNavigationId")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUsuarioNavigationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Pais")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdRolNavigationId");
-
-                    b.HasIndex("IdUsuarioNavigationId");
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Pacientes");
                 });
@@ -329,7 +272,9 @@ namespace CitasMedicasAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NombreRol")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -344,105 +289,86 @@ namespace CitasMedicasAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool?>("Activo")
+                    b.Property<bool>("Activo")
                         .HasColumnType("bit");
 
                     b.Property<string>("Apellido")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Contraseña")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Correo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("FechaRegistro")
+                    b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdRol")
+                    b.Property<int>("IdRol")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdRol");
 
                     b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.CentrosMedicosClinica", b =>
                 {
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", "IdGrupEspecialidadeNavigation")
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", null)
                         .WithMany("CentrosMedicosClinicas")
-                        .HasForeignKey("IdEspecialistaEspecialidad");
+                        .HasForeignKey("GrupEspecialidadeId");
 
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Administradore", "IdResponsableNavigation")
-                        .WithMany("CentrosMedicosClinicas")
-                        .HasForeignKey("IdResponsable");
-
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.RolesUsuario", "IdRolNavigation")
-                        .WithMany("CentrosMedicosClinicas")
-                        .HasForeignKey("IdRol");
-
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "IdUsuarioNavigation")
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", "GrupEspecialidade")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioNavigationId");
+                        .HasForeignKey("IdGupEspecialidad")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("IdGrupEspecialidadeNavigation");
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("IdResponsableNavigation");
+                    b.Navigation("GrupEspecialidade");
 
-                    b.Navigation("IdRolNavigation");
-
-                    b.Navigation("IdUsuarioNavigation");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Cita", b =>
-                {
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.CentrosMedicosClinica", "IdCmcNavigation")
-                        .WithMany("Cita")
-                        .HasForeignKey("IdCmc");
-
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Especialista", "IdEspecialistaNavigation")
-                        .WithMany("Cita")
-                        .HasForeignKey("IdEspecialista");
-
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Paciente", "IdPacienteNavigation")
-                        .WithMany("Cita")
-                        .HasForeignKey("IdPaciente");
-
-                    b.Navigation("IdCmcNavigation");
-
-                    b.Navigation("IdEspecialistaNavigation");
-
-                    b.Navigation("IdPacienteNavigation");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Especialista", b =>
                 {
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Especialidade", null)
-                        .WithMany("Especialista")
-                        .HasForeignKey("EspecialidadeId");
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", "GrupEspecialidade")
+                        .WithMany()
+                        .HasForeignKey("IdGupEspecialidad")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Administradore", "IdResponsableNavigation")
-                        .WithMany("Especialista")
-                        .HasForeignKey("IdResponsable");
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.RolesUsuario", null)
-                        .WithMany("Especialista")
-                        .HasForeignKey("RolesUsuarioId");
+                    b.Navigation("GrupEspecialidade");
 
-                    b.Navigation("IdResponsableNavigation");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", b =>
                 {
                     b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Especialidade", "IdEspecialidadNavigation")
-                        .WithMany("GrupEspecialidades")
+                        .WithMany()
                         .HasForeignKey("IdEspecialidadNavigationId");
 
                     b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Especialista", "IdEspecialistaNavigation")
-                        .WithMany("GrupEspecialidades")
+                        .WithMany()
                         .HasForeignKey("IdEspecialistaNavigationId");
 
                     b.HasOne("CitasMedicasAPI.Data.CitasApiModels.CentrosMedicosClinica", "idCentrosMedicosClinicaNavigation")
@@ -456,80 +382,31 @@ namespace CitasMedicasAPI.Migrations
                     b.Navigation("idCentrosMedicosClinicaNavigation");
                 });
 
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Notificacione", b =>
-                {
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Cita", "IdCitaNavigation")
-                        .WithMany("Notificaciones")
-                        .HasForeignKey("IdCita");
-
-                    b.Navigation("IdCitaNavigation");
-                });
-
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Paciente", b =>
                 {
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.RolesUsuario", "IdRolNavigation")
-                        .WithMany("Pacientes")
-                        .HasForeignKey("IdRolNavigationId");
-
-                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "IdUsuarioNavigation")
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("IdUsuarioNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("IdRolNavigation");
-
-                    b.Navigation("IdUsuarioNavigation");
+                    b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Administradore", b =>
+            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Usuario", b =>
                 {
-                    b.Navigation("CentrosMedicosClinicas");
+                    b.HasOne("CitasMedicasAPI.Data.CitasApiModels.RolesUsuario", "RolesUsuario")
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Especialista");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.CentrosMedicosClinica", b =>
-                {
-                    b.Navigation("Cita");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Cita", b =>
-                {
-                    b.Navigation("Notificaciones");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Especialidade", b =>
-                {
-                    b.Navigation("Especialista");
-
-                    b.Navigation("GrupEspecialidades");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Especialista", b =>
-                {
-                    b.Navigation("Cita");
-
-                    b.Navigation("GrupEspecialidades");
+                    b.Navigation("RolesUsuario");
                 });
 
             modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.GrupEspecialidade", b =>
                 {
                     b.Navigation("CentrosMedicosClinicas");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.Paciente", b =>
-                {
-                    b.Navigation("Cita");
-                });
-
-            modelBuilder.Entity("CitasMedicasAPI.Data.CitasApiModels.RolesUsuario", b =>
-                {
-                    b.Navigation("CentrosMedicosClinicas");
-
-                    b.Navigation("Especialista");
-
-                    b.Navigation("Pacientes");
                 });
 #pragma warning restore 612, 618
         }

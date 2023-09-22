@@ -1,7 +1,9 @@
 namespace CitasMedicasAPI.Services;
 
+using System;
 using CitasMedicasAPI.Data;
 using CitasMedicasAPI.Data.CitasApiModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 public class PacienteService
@@ -27,9 +29,33 @@ public class PacienteService
         metodos para manejar las solicitudes get by id pacientes
         /api/Paciente/getpaciente/{id}
         */
+
     public Paciente? GetById(int id)
     {
-        return _context.Pacientes.Find(id);
+        // return _context.Pacientes.Find(id);
+        return _context.Pacientes.Include(p => p.Usuario).SingleOrDefault(p => p.Id == id);
+    }
+
+    public Paciente? GetPacienteByUsuarioId(int idUsuario)
+    {
+        var usuario = _context.Usuarios.SingleOrDefault(u => u.Id == idUsuario);
+
+        if (usuario != null)
+        {
+            // Crea un nuevo Paciente y asigna los valores del Usuario
+            var paciente = new Paciente
+            {
+                Id = usuario.Id,
+                // Asigna otras propiedades del Paciente
+                Genero = "Algun valor",
+                // Asigna el IdUsuario
+                IdUsuario = usuario.Id
+            };
+
+            return paciente;
+        }
+
+        return null;
     }
 
     /*
@@ -84,5 +110,4 @@ public class PacienteService
             _context.SaveChanges();
         }
     }
-
 }

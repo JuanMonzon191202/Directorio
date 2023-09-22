@@ -1,0 +1,11 @@
+{
+  "id": 0,
+  "idRol": 0,
+  "nombre": "string",
+  "apellido": "string",
+  "correo": "string",
+  "contraseña": "string",
+  "fechaRegistro": "2023-09-22T17:57:40.553Z",
+  "activo": true,
+  "idRolNavigation": {}
+}

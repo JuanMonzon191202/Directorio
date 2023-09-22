@@ -40,6 +40,20 @@ public class PacientesController : ControllerBase
     [HttpPost("paciente")]
     public IActionResult Create(Paciente paciente)
     {
+        // Verificar si el paciente (usuario) existe a través de su IdUsuario
+        var usuario = _service.GetPacienteByUsuarioId(paciente.IdUsuario);
+        
+
+        // Verificar si el usuario existe
+        if (usuario == null)
+        {
+            return BadRequest("El Usuario especificado no existe.");
+        }
+
+        // Asignar el Id del usuario al paciente
+        paciente.IdUsuario = usuario.Id;
+      
+        // Crear el nuevo paciente con la relación establecida
         var newPaciente = _service.Create(paciente);
 
         return CreatedAtAction(nameof(GetById), new { id = newPaciente.Id }, newPaciente);

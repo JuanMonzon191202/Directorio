@@ -27,17 +27,17 @@ public class EspecialistaService
     //     return _context.Especialistas.Where(e => e.IdEspecialidad == idEspecialidad).ToList();
     // }
 
-    public IEnumerable<Especialista> GetEspecialistasByEspecialidad(int especialidadId)
-    {
-        // Utiliza LINQ para filtrar los especialistas por el ID de la especialidad
-        var especialistas = _context.Especialistas
-            .Where(
-                e => e.GrupEspecialidades.Any(es => es.IdEspecialidad == especialidadId)
-            )
-            .ToList();
+    // public IEnumerable<Especialista> GetEspecialistasByEspecialidad(int especialidadId)
+    // {
+    //     // Utiliza LINQ para filtrar los especialistas por el ID de la especialidad
+    //     var especialistas = _context.Especialistas
+    //         .Where(
+    //             e => e.GrupEspecialidades.Any(es => es.IdEspecialidad == especialidadId)
+    //         )
+    //         .ToList();
 
-        return especialistas;
-    }
+    //     return especialistas;
+    // }
 
 //TODO la tabla de las CMC no tienen especialidades con este metodo ya podra obtener tanto los especialistas como las CMC
 
@@ -45,7 +45,7 @@ public class EspecialistaService
     public IEnumerable<object> GetEspecialistasYCMCPorEspecialidad(int especialidadId)
     {
         var query =
-        from ee in _context.EspecialistasEspecialidades
+        from ee in _context.GrupEspecialidades
         join e in _context.Especialistas on ee.IdEspecialista equals e.Id
         join cmc in _context.CentrosMedicosClinicas on ee.IdEspecialista equals cmc.IdResponsable
         where ee.IdEspecialidad == especialidadId

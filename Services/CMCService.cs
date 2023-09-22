@@ -57,10 +57,10 @@ public class CMCService
             {
                 existingCMC.IdResponsable = cmc.IdResponsable.Value;
             }
-            if (cmc.IdEspecialistaEspecialidad != null){
+            // if (cmc.IdEspecialistaEspecialidad != null){
 
-                existingCMC.IdEspecialistaEspecialidad = cmc.IdEspecialistaEspecialidad;
-            }
+            //     existingCMC.IdEspecialistaEspecialidad = cmc.IdEspecialistaEspecialidad;
+            // }
             
             _context.SaveChanges();
         }

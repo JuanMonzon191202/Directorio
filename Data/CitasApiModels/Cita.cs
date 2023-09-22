@@ -7,11 +7,11 @@ public partial class Cita
 {
     public int Id { get; set; }
 
-    public int? IdPaciente { get; set; }
+    public int? IdPaciente { get; set; } // id llave foranea del usuario que pertenezca a los pacientes 
 
-    public int? IdEspecialista { get; set; }
+    public int? IdEspecialista { get; set; } // id llave foranea del usuario que pertenezca a los especialistas 
 
-    public int? IdCmc { get; set; }
+    public int? IdCmc { get; set; }  // id llave foranea del usuario que pertenezca a los CMC (Centro medico o Clinicas)
 
     public DateTime? FechaCita { get; set; }
 
@@ -23,11 +23,5 @@ public partial class Cita
 
     public bool? Eliminado { get; set; }
 
-    public virtual CentrosMedicosClinica? IdCmcNavigation { get; set; }
-
-    public virtual Especialista? IdEspecialistaNavigation { get; set; }
-
-    public virtual Paciente? IdPacienteNavigation { get; set; }
-
-    public virtual ICollection<Notificacione> Notificaciones { get; set; } = new List<Notificacione>();
+    
 }

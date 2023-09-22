@@ -62,19 +62,19 @@ public class EspecialistasController : ControllerBase
 
     
 
-        // Nueva acción GET para buscar especialistas por especialidad
-    [HttpGet("por-especialidad/{especialidadId}")]
-    public IActionResult GetEspecialistasByEspecialidad(int especialidadId)
-    {
-        var especialistas = _service.GetEspecialistasByEspecialidad(especialidadId);
+    //     // Nueva acción GET para buscar especialistas por especialidad
+    // [HttpGet("por-especialidad/{especialidadId}")]
+    // public IActionResult GetEspecialistasByEspecialidad(int especialidadId)
+    // {
+    //     var especialistas = _service.GetEspecialistasByEspecialidad(especialidadId);
         
-        if (especialistas == null || !especialistas.Any())
-        {
-            return NotFound("No se encontraron especialistas para esta especialidad.");
-        }
+    //     if (especialistas == null || !especialistas.Any())
+    //     {
+    //         return NotFound("No se encontraron especialistas para esta especialidad.");
+    //     }
 
-        return Ok(especialistas);
-    }
+    //     return Ok(especialistas);
+    // }
 
     [HttpGet("especialistas-y-cmc/{especialidadId}")]
     public IActionResult GetEspecialistasYCMCPorEspecialidad(int especialidadId)
